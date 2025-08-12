@@ -174,7 +174,9 @@ export default function Payment() {
             }
           }
           if (data.status === "pending") {
-            setisloading(true)
+            setisloading(false)
+            setstep(2)
+
           } else if (data.status === "approved") {
             setisloading(false)
             setstep(2)
