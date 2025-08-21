@@ -253,7 +253,7 @@ export default function Payment() {
         style={{ direction: "ltr" }}
       >
         <div id="PayPageEntry">
-          <div className="container">
+          <div className="container"  style={{ display: "flex", justifyContent: "center" ,flexDirection:'column'}}>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <img src="./mob.jpg" className="-" alt="logo" />
             </div>
