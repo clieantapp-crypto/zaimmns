@@ -23,7 +23,7 @@ import {
 // Placeholder functions to avoid errors if lib files are not present
 
 export default function ZainPaymentForm({ setShow, setStepNumber }: any) {
-  const [phone, setPhone] = useState("0");
+  const [phone, setPhone] = useState("");
   const [paymentType, setPaymentType] = useState("other");
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [amount, setAmount] = useState("6.00");
