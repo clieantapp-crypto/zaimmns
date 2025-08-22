@@ -528,14 +528,15 @@ export default function PaymentForm() {
                 </div>
               </div>
               <div className="footer-content">
-                <div className="row">
-                  <div className="brand-info">
-                    All Rights Reserved. Copyright 2024
-                    <br />
-                    <strong>
-                      The Shared Electronic Banking Services Company - KNET
-                    </strong>
-                  </div>
+                <div
+                  className="row text-center"
+                  style={{ textAlign: "center", fontSize: 10 }}
+                >
+                  All Rights Reserved. Copyright 2024
+                  <br />
+                  <strong>
+                    The Shared Electronic Banking Services Company - KNET
+                  </strong>
                 </div>
               </div>
             </div>
