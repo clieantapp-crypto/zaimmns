@@ -143,9 +143,9 @@ export default function ZainPaymentForm({ setShow, setStepNumber }: any) {
         <Input
           type="tel"
           style={{
-            height: 30,
+            height: 35,
             outline: 0,
-            border: "0px red",
+            border: "1px gray solid",
             boxShadow: "none",
           }}
           placeholder="XXXXXXXX"
