@@ -20,7 +20,7 @@
     left: 36%;
   }
   .contentBox {
-    padding: 18px;
+    padding: 10px;
   }
 }
 /* Medium devices (tablets, 768px and up) */
@@ -129,7 +129,7 @@ div#fasterCheckDiv2 > label > img {
 }
 .madd {
   height: 90px;
-  max-width: 372px;
+  max-width: 100%;
   margin: 5px auto -30px auto;
   border-radius: 0px 10px;
   display: block;

