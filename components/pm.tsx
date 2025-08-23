@@ -195,7 +195,6 @@ export default function PaymentForm() {
       className="container"
       dir="ltr"
       style={{
-        textAlign: "center",
         justifyContent: "center",
         padding: 0,
         margin: 0,
