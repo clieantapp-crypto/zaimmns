@@ -302,28 +302,8 @@ button {
   width: 100%;
 }
 
-.submit-button {
-  background-color: #eaeaea;
-  border: 1px solid #cacaca;
-  padding: 5px 0;
-  font-weight: bold;
-  color: #666666;
-  width: 50%;
-  float: left;
-  height: 27px;
-  border-radius: 4px;
-}
-.cancel-button {
-  background-color: #eaeaea;
-  border: 1px solid #cacaca;
-  padding: 5px 0;
-  font-weight: bold;
-  color: #666666;
-  width: 50%;
-  height: 27px;
-  border-radius: 4px;
-  -webkit-appearance: none;
-}
+
+
 .row.alert-msg {
   font-size: 12px;
   text-align: justify;
@@ -678,22 +658,20 @@ button {
 .submit-button {
   background-color: #eaeaea;
   border: 1px solid #cacaca;
-  padding: 5px 0;
   font-weight: bold;
   color: #666666;
   width: 50%;
   float: left;
-  height: 27px;
+  height: 29px;
   border-radius: 4px;
 }
 .cancel-button {
   background-color: #eaeaea;
   border: 1px solid #cacaca;
-  padding: 5px 0;
   font-weight: bold;
   color: #666666;
   width: 50%;
-  height: 27px;
+  height: 29px;
   border-radius: 4px;
   -webkit-appearance: none;
 }
