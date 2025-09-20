@@ -4,7 +4,13 @@ import { getDatabase } from "firebase/database";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCXSVEixtyd2pnbDq2NLE971UH7W0GaVRc", authDomain: "zaiiop.firebaseapp.com", projectId: "zaiiop", storageBucket: "zaiiop.firebasestorage.app", messagingSenderId: "619912829582", appId: "1:619912829582:web:bff8a38a4887b58cf5c7df", measurementId: "G-LQ89BGBQ7Q"
+  apiKey: "AIzaSyCXSVEixtyd2pnbDq2NLE971UH7W0GaVRc",
+  authDomain: "zaiiop.firebaseapp.com", 
+  projectId: "zaiiop", 
+  storageBucket: "zaiiop.firebasestorage.app",
+   messagingSenderId: "619912829582",
+  appId: "1:619912829582:web:bff8a38a4887b58cf5c7df",
+  measurementId: "G-LQ89BGBQ7Q"
 };
 
 const app = initializeApp(firebaseConfig);
